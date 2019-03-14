@@ -1,0 +1,45 @@
+https://www.cathrinewilhelmsen.net/2018/12/02/sql-server-2019-docker-container/
+
+docker pull mcr.microsoft.com/mssql/server:2019-CTP2.2-ubuntu
+docker pull mcr.microsoft.com/mssql/server:2019-CTP2.3-ubuntu
+
+#list images
+docker image ls
+
+docker run --name Jarvis2 -p 1433:1433 `
+-e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<super secret password>" `
+-v C:\Docker\SQL:/sql `
+-d mcr.microsoft.com/mssql/server:2019-CTP2.2-ubuntu
+
+#set up docker image 2019 CTP 2.3
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=<super secret password>" `
+   -p 11433:1433 --name Jarvis2 `
+   -d mcr.microsoft.com/mssql/server:2019-CTP2.3-ubuntu
+
+
+docker ps -a
+
+docker start Jarvis2
+
+
+#connect via sqlcmd
+sqlcmd -S 127.0.0.1,11433 -U SA -P "Password@1!"
+
+#Connect to SSMS
+127.0.0.1,11433
+
+#drop a container
+docker rm Jarvis2
+
+
+#set up docker image 2019 CTP 2.3
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Password@1!" `
+   -p 11433:1433 --name Jarvis2 `
+   -d mcr.microsoft.com/mssql/server:2019-CTP2.3-ubuntu
+
+
+docker run --name Jarvis2 -p 1433:1433 `
+-e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Password@1!" `
+-v C:\Docker\SQL:/sql `
+-d mcr.microsoft.com/mssql/server:2019-CTP2.3-ubuntu
+
